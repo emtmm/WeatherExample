@@ -4,5 +4,14 @@
     <string name="app_name">WeatherExample</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="saved_location_tab_label">Saved Locations</string>
+    <string name="add_location_tab_label">Add Location</string>
+    <string name="specify_location_label">Specify location&#8230;</string>
+    <string name="search_location_label">Search</string>
+    <string name="alert_label">You must insert a zipcode!</string>
+    <string name="message_no_location">no location introduced</string>
+    <string name="message_invalid_location">invalid location</string>
+    <string name="title_activity_weather_detail">WeatherDetailActivity</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
