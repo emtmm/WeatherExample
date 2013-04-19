@@ -1,9 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/add_to_favorites"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/add_favorites_label"
+        android:icon="@drawable/abs__ab_bottom_solid_dark_holo"/>
 
 </menu>

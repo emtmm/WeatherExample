@@ -25,8 +25,14 @@ import org.xml.sax.SAXException;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+import com.emtmm.weatherexample.data.DBHelper;
+import com.emtmm.weatherexample.data.DBHelper.Location;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Activity;
@@ -34,14 +40,13 @@ import android.app.Activity;
 public class WeatherDetailActivity extends SherlockFragmentActivity {
 	public static final String TAG = SavedLocations.class.getSimpleName();
 	ActionBar actionBar;
-
-	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		return true;
-	}
+	MyWeather myWeather = new MyWeather();
 
 	TextView weather;
+	String sel_woeid;
+	String zip;
+
+	private DBHelper dbHelper;
 
 	class MyWeather {
 
@@ -84,8 +89,8 @@ public class WeatherDetailActivity extends SherlockFragmentActivity {
 		weather = (TextView) findViewById(R.id.weather);
 
 		Bundle bundle = this.getIntent().getExtras();
-		String sel_woeid = (String) bundle.getCharSequence("SEL_WOEID");
-
+		sel_woeid = (String) bundle.getCharSequence("SEL_WOEID");
+		zip = (String) bundle.getCharSequence("zip");
 		new MyQueryYahooWeatherTask(sel_woeid).execute();
 
 		Toast.makeText(getApplicationContext(), sel_woeid, Toast.LENGTH_LONG)
@@ -178,7 +183,7 @@ public class WeatherDetailActivity extends SherlockFragmentActivity {
 
 		private MyWeather parseWeather(Document srcDoc) {
 
-			MyWeather myWeather = new MyWeather();
+			// MyWeather myWeather = new MyWeather();
 
 			// <description>Yahoo! Weather for New York, NY</description>
 			NodeList descNodelist = srcDoc.getElementsByTagName("description");
@@ -265,4 +270,39 @@ public class WeatherDetailActivity extends SherlockFragmentActivity {
 		}
 
 	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		Log.v(Constants.LOGTAG, " " + WeatherDetailActivity.TAG + " onStart");
+		dbHelper = new DBHelper(this);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getSupportMenuInflater();
+		inflater.inflate(R.menu.weather_detail, menu);
+
+		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Log.d("item", String.valueOf(item.getItemId()));
+		switch (item.getItemId()) {
+		case R.id.add_to_favorites:
+
+			Location loc = new Location();
+			loc.zip = zip;
+			loc.city = myWeather.city;
+			loc.region = myWeather.region;
+			loc.woeid = sel_woeid;
+			this.dbHelper.insert(loc);
+
+			break;
+		}
+
+		return true;
+	}
+
 }

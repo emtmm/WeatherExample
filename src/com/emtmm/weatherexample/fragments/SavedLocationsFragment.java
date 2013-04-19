@@ -3,6 +3,7 @@ package com.emtmm.weatherexample.fragments;
 import java.util.List;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,11 +11,14 @@ import android.os.Message;
 import com.actionbarsherlock.app.SherlockListFragment;
 import com.emtmm.weatherexample.Constants;
 import com.emtmm.weatherexample.R;
+import com.emtmm.weatherexample.WeatherDetailActivity;
 import com.emtmm.weatherexample.data.DBHelper;
 import com.emtmm.weatherexample.data.DBHelper.Location;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -44,29 +48,23 @@ public class SavedLocationsFragment extends SherlockListFragment {
 			if ((locations == null) || (locations.size() == 0)) {
 				empty.setText("No Data");
 			} else {
-				// adapter = new
-				// ArrayAdapter<Location>(SavedLocationsFragment.this,
-				// R.layout.locations_list_item, locations);
+				adapter = new ArrayAdapter<Location>(
+						getActivity(),
+						android.R.layout.simple_list_item_1, locations);
 				setListAdapter(adapter);
 			}
 		}
 	};
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
-	 */
+	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		getActivity().setContentView(R.layout.saved_location_list);
-		getListView().setEmptyView(
-				getActivity().findViewById(R.id.view_saved_locations_empty));
-		this.empty = (TextView) getActivity().findViewById(
+		//getActivity().setContentView(R.layout.saved_location_list);
+		
+		empty = (TextView) getActivity().findViewById(
 				R.id.view_saved_locations_empty);
-		this.dbHelper = new DBHelper(getActivity());
+		dbHelper = new DBHelper(getActivity());
 		loadLocations();
 	}
 
@@ -80,6 +78,7 @@ public class SavedLocationsFragment extends SherlockListFragment {
 			@Override
 			public void run() {
 				locations = dbHelper.getAll();
+				Log.d("locationInfo", locations.toString());
 				handler.sendEmptyMessage(0);
 			}
 		}.start();
@@ -88,9 +87,15 @@ public class SavedLocationsFragment extends SherlockListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
+		getActivity().setContentView(R.layout.saved_location_list);
 	}
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup
+	 container,Bundle savedInstanceState) {
+	    View rootView = inflater.inflate(R.layout.saved_location_list, container, false);
 
+	    return rootView;
+	}
 	@Override
 	public void onPause() {
 		super.onResume();
@@ -100,12 +105,25 @@ public class SavedLocationsFragment extends SherlockListFragment {
 	@Override
 	public void onResume() {
 		super.onResume();
+		if (progressDialog.isShowing())
+			progressDialog.dismiss();
 	}
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		// TODO Auto-generated method stub
 		super.onListItemClick(l, v, position, id);
+		
+		Intent intent = new Intent();
+		intent.setClass(getActivity(), WeatherDetailActivity.class);
+		Bundle bundle = new Bundle();
+		Location selLoc = locations.get(position);
+		
+		//Log.d("position", selLoc.city.toString());
+		bundle.putCharSequence("SEL_WOEID", selLoc.woeid.toString());
+		bundle.putCharSequence("zip", selLoc.zip.toString());
+		intent.putExtras(bundle);
+		startActivity(intent);
 	}
 
 }

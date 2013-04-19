@@ -17,7 +17,7 @@ public class DBHelper {
 
 	public static final String DB_NAME = "weather_example";
 	public static final String DB_TABLE = "w_locations";
-	public static final int DB_VERSION = 1;
+	public static final int DB_VERSION = 2;
 
 	private static final String CLASSNAME = DBHelper.class.getSimpleName();
 	private static final String[] COLS = new String[] { "_id", "zip", "city",
@@ -29,7 +29,7 @@ public class DBHelper {
 	public static class Location {
 
 		public long id;
-		public int woeid;
+		public String woeid;
 		public String zip;
 		public String city;
 		public String region;
@@ -38,7 +38,7 @@ public class DBHelper {
 		}
 
 		public Location(final long id, final String zip, final String city,
-				final String region, final int woeid) {
+				final String region, final String woeid) {
 			this.id = id;
 			this.zip = zip;
 			this.city = city;
@@ -142,7 +142,7 @@ public class DBHelper {
 				location.zip = c.getString(1);
 				location.city = c.getString(2);
 				location.region = c.getString(3);
-				location.woeid = c.getInt(4);
+				location.woeid = c.getString(4);
 			}
 		} catch (SQLException e) {
 			Log.v(Constants.LOGTAG, DBHelper.CLASSNAME, e);
@@ -158,8 +158,8 @@ public class DBHelper {
 		ArrayList<Location> ret = new ArrayList<Location>();
 		Cursor c = null;
 		try {
-			c = this.db.query(DBHelper.DB_TABLE, DBHelper.COLS, null, null,
-					null, null, null);
+			c = db.query(DBHelper.DB_TABLE, DBHelper.COLS, null, null, null,
+					null, null);
 			int numRows = c.getCount();
 			c.moveToFirst();
 			for (int i = 0; i < numRows; ++i) {
@@ -168,8 +168,10 @@ public class DBHelper {
 				location.zip = c.getString(1);
 				location.city = c.getString(2);
 				location.region = c.getString(3);
-				location.woeid = c.getInt(4);				
-				
+				location.woeid = c.getString(4);
+
+				ret.add(location);
+
 				c.moveToNext();
 			}
 		} catch (SQLException e) {

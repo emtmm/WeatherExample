@@ -163,6 +163,7 @@ public class NewLocationFragment extends SherlockFragment {
 			intent.setClass(getActivity(), WeatherDetailActivity.class);
 			Bundle bundle = new Bundle();
 			bundle.putCharSequence("SEL_WOEID", selWoeid);
+			bundle.putCharSequence("zip", location.getText().toString());
 			intent.putExtras(bundle);
 			startActivity(intent);
 			super.onPostExecute(result);
