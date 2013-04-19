@@ -9,18 +9,21 @@ import com.emtmm.weatherexample.fragments.SavedLocationsFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 public class SavedLocations extends SherlockFragmentActivity {
 	public static final String TAG = SavedLocations.class.getSimpleName();
 	ActionBar actionBar;
+	private FragmentTabHost mTabHost;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_saved_locations);
+		//setContentView(R.layout.activity_saved_locations);
 		actionBar = getSupportActionBar();
+		
 		getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 		actionBar.addTab(actionBar
 				.newTab()
@@ -40,6 +43,9 @@ public class SavedLocations extends SherlockFragmentActivity {
 						new TabListener<NewLocationFragment>(this,
 								NewLocationFragment.TAG,
 								NewLocationFragment.class)));
+		if (savedInstanceState != null) {
+			actionBar.setSelectedNavigationItem(savedInstanceState.getInt("tab", 0));
+        }
 	}
 
 	@Override
@@ -103,6 +109,7 @@ public class SavedLocations extends SherlockFragmentActivity {
 		}
 	}
 
+	
 	/*
 	 * (non-Javadoc)
 	 * 

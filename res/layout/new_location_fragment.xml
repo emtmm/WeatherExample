@@ -5,28 +5,8 @@
     android:gravity="center_horizontal"
     android:padding="10dp" >
 
-    <Button
-        android:id="@+id/specify_location_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/search_location_label" />
 
-    <EditText
-        android:id="@+id/location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/specify_location_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="44dp"
-        android:ems="10"
-        android:hint="@string/specify_location_label" >
-
-        <requestFocus />
-    </EditText>
-
-    <ListView
+    <!-- <ListView
         android:id="@+id/woeidlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +14,26 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/specify_location_button" >
 
-    </ListView>
+    </ListView> -->
+
+    <EditText
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:hint="@string/specify_location_label"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/specify_location_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/location"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="46dp"
+        android:text="@string/search_location_label" />
 
 </RelativeLayout>

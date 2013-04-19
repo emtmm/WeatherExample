@@ -23,7 +23,6 @@ import org.xml.sax.SAXException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -36,30 +35,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-
 import com.actionbarsherlock.app.SherlockFragment;
 import com.emtmm.weatherexample.Constants;
 import com.emtmm.weatherexample.R;
 import com.emtmm.weatherexample.WeatherDetailActivity;
-import com.emtmm.weatherexample.data.DBHelper;
 
 public class NewLocationFragment extends SherlockFragment {
 
 	public static final String TAG = NewLocationFragment.class.getSimpleName();
 
-	private DBHelper dbHelper;
-	private ProgressDialog progressDialog;
 	private EditText location;
 	private Button button;
-	private ListView listviewWOEID;
 	final String yahooPlaceApisBase = "http://where.yahooapis.com/v1/places.q('";
 	String yahooPlaceAPIsQuery;
 
@@ -71,17 +60,18 @@ public class NewLocationFragment extends SherlockFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
-		getActivity().setContentView(R.layout.new_location_fragment);
 		location = (EditText) getActivity().findViewById(R.id.location);
 		button = (Button) getActivity().findViewById(
 				R.id.specify_location_button);
-		listviewWOEID = (ListView) getActivity().findViewById(R.id.woeidlist);
+		// listviewWOEID = (ListView)
+		// getActivity().findViewById(R.id.woeidlist);
 
 		location.addTextChangedListener(new TextWatcher() {
 			// @Override
@@ -115,7 +105,6 @@ public class NewLocationFragment extends SherlockFragment {
 	}
 
 	protected void handleLoadLocation() {
-		Intent intent = null;
 		if (validate()) {
 			new MyQueryYahooPlaceTask().execute();
 		}
@@ -133,31 +122,7 @@ public class NewLocationFragment extends SherlockFragment {
 
 		@Override
 		protected void onPostExecute(Void result) {
-			/*ArrayAdapter<String> aa = new ArrayAdapter<String>(getActivity(),
-					android.R.layout.simple_list_item_1, l);
-			listviewWOEID.setAdapter(aa);
 
-			listviewWOEID.setOnItemClickListener(new OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-
-					String selWoeid = l.get(position).toString();
-					Log.d("woeid", selWoeid);
-					
-					 * Toast.makeText(getApplicationContext(), selWoeid,
-					 * Toast.LENGTH_LONG).show();
-					 
-
-					Intent intent = new Intent();
-					intent.setClass(getActivity(), WeatherDetailActivity.class);
-					Bundle bundle = new Bundle();
-					bundle.putCharSequence("SEL_WOEID", selWoeid);
-					intent.putExtras(bundle);
-					startActivity(intent);
-				}
-			});*/
 			String selWoeid = l.get(0).toString();
 			Intent intent = new Intent();
 			intent.setClass(getActivity(), WeatherDetailActivity.class);
@@ -186,12 +151,11 @@ public class NewLocationFragment extends SherlockFragment {
 	private ArrayList<String> parseWOEID(Document srcDoc) {
 		ArrayList<String> listWOEID = new ArrayList<String>();
 
-		
 		NodeList nodeListDescription = srcDoc.getElementsByTagName("woeid");
 		if (nodeListDescription.getLength() >= 0) {
 			for (int i = 0; i < nodeListDescription.getLength(); i++) {
 				listWOEID.add(nodeListDescription.item(i).getTextContent());
-				
+
 			}
 		} else {
 			listWOEID.clear();
@@ -257,7 +221,10 @@ public class NewLocationFragment extends SherlockFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		return super.onCreateView(inflater, container, savedInstanceState);
+		View rootView = inflater.inflate(R.layout.new_location_fragment,
+				container, false);
+
+		return rootView;
 	}
 
 	@Override
