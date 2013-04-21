@@ -1,21 +1,97 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".WeatherDetailActivity" >
+    android:background="#fcfcfc"
+    android:padding="3dp" >
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_gradient"
+        android:padding="5dp" >
 
         <TextView
-            android:id="@+id/weather"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" />
-    </ScrollView>
+            android:id="@+id/view_location_label"
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/view_location_label" />
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/condition_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="150dp"
+            android:layout_toRightOf="@id/view_location_label" />
+
+        <TextView
+            android:id="@+id/view_location"
+            style="@style/view_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_location_label"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:id="@+id/view_date_label"
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_location"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="@string/view_date_label" />
+
+        <TextView
+            android:id="@+id/view_date"
+            style="@style/view_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_date_label"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:id="@+id/view_condition_label"
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_date"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="@string/view_condition_label" />
+
+        <TextView
+            android:id="@+id/view_condition"
+            style="@style/view_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_condition_label"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp" />
+
+        <TextView
+            android:id="@+id/view_forecast_label"
+            style="@style/label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_condition"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="@string/view_forecast_label" />
+
+        <TextView
+            android:id="@+id/view_forecast"
+            style="@style/view_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/view_forecast_label"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp" />
+    </RelativeLayout>
+
+</ScrollView>

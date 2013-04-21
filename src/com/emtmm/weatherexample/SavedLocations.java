@@ -9,15 +9,12 @@ import com.emtmm.weatherexample.fragments.SavedLocationsFragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.widget.Toast;
 
 public class SavedLocations extends SherlockFragmentActivity {
 	public static final String TAG = SavedLocations.class.getSimpleName();
 	ActionBar actionBar;
-	private FragmentTabHost mTabHost;
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
